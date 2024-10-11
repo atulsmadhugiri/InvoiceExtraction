@@ -51,12 +51,17 @@ let endpoint =
 func main() async {
   do {
     let response = try await NetworkManager.sendGeminiRequest(
-      to: endpoint, with: request)
+      to: endpoint,
+      with: request
+    )
     let jsonDecoder = JSONDecoder()
-    let generationResponse = try jsonDecoder.decode(Response.self, from: response)
+    let generationResponse = try jsonDecoder.decode(
+      Response.self,
+      from: response
+    )
     print(generationResponse.candidates.first!.content.parts.first!.text)
   } catch {
-    print("oops?")
+    print("Request to Gemini failed.")
   }
 }
 
