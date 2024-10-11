@@ -52,13 +52,9 @@ func main() async {
   do {
     let response = try await NetworkManager.sendGeminiRequest(
       to: endpoint, with: request)
-    let jsonObject = try JSONSerialization.jsonObject(
-      with: response, options: [])
-    let prettyJSONData = try JSONSerialization.data(
-      withJSONObject: jsonObject, options: [.prettyPrinted])
-    if let prettyJSONString = String(data: prettyJSONData, encoding: .utf8) {
-      print(prettyJSONString)
-    }
+    let jsonDecoder = JSONDecoder()
+    let generationResponse = try jsonDecoder.decode(Response.self, from: response)
+    print(generationResponse.candidates.first!.content.parts.first!.text)
   } catch {
     print("oops?")
   }
