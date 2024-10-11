@@ -1,5 +1,14 @@
 import Foundation
 
+guard CommandLine.arguments.count > 1 else {
+  print("Usage: \(CommandLine.arguments[0]) <file-path>")
+  exit(1)
+}
+
+let filePath = CommandLine.arguments[1]
+
+print("File path provided: \(filePath)")
+
 let safetySettings: [SafetySetting] = [
   SafetySetting(
     category: "HARM_CATEGORY_HATE_SPEECH",
@@ -26,14 +35,25 @@ let generationConfig: GenerationConfig = GenerationConfig(
   seed: 0
 )
 
-let textPrompt: Part = Part(
+let fileContents = try! Data(contentsOf: URL(fileURLWithPath: filePath))
+let base64String = fileContents.base64EncodedString()
+
+let inlineData: InlineData = InlineData(
+  mimeType: "application/pdf", data: base64String)
+
+let partOne: Part = Part(
+  inlineData: inlineData,
+  text: nil
+)
+
+let partTwo: Part = Part(
   inlineData: nil,
-  text: "Give me the sum of 5 and 10."
+  text: "Summarize this PDF."
 )
 
 let requestContents: RequestContents = RequestContents(
   role: "user",
-  parts: [textPrompt]
+  parts: [partOne, partTwo]
 )
 
 let request: Request = Request(
