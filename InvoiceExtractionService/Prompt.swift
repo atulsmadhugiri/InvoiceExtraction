@@ -64,4 +64,7 @@ let prompt = """
   - The values must only include text found in the document
   - Do not normalize any entity value.
   - If an entity is not found in the document, set the entity value to null.
+  
+  At the bottom of the response, please list the line items as rows formatted as CSV.
+  Use ```csv to indicate the beginning of the CSV portion.
   """

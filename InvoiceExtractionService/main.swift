@@ -48,7 +48,7 @@ let partOne: Part = Part(
 
 let partTwo: Part = Part(
   inlineData: nil,
-  text: "Summarize this PDF."
+  text: prompt
 )
 
 let requestContents: RequestContents = RequestContents(
