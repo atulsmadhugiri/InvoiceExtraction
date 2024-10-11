@@ -21,14 +21,14 @@ struct TextPrompt {
   let text: String
 }
 
-struct Parts {
+struct Part {
   let inlineData: InlineData?
   let text: String?
 }
 
 struct RequestContents {
   let role: String
-  let parts: [Parts]
+  let parts: [Part]
 }
 
 struct Request {
